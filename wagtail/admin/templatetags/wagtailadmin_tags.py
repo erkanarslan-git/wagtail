@@ -8,10 +8,12 @@ from django.conf import settings
 from django.contrib.admin.utils import quote
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.contrib.messages.constants import DEFAULT_TAGS as MESSAGE_TAGS
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Min, QuerySet
 from django.template.defaultfilters import stringfilter
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import force_str
 from django.utils.html import avoid_wrapping, format_html, format_html_join
@@ -20,7 +22,7 @@ from django.utils.timesince import timesince
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.localization import get_js_translation_strings
-from wagtail.admin.menu import admin_menu
+from wagtail.admin.menu import admin_menu, serialize_admin_menu
 from wagtail.admin.navigation import get_explorable_root_page
 from wagtail.admin.search import admin_search_areas
 from wagtail.admin.staticfiles import versioned_static as versioned_static_func
@@ -637,3 +639,35 @@ def locales():
         }
         for locale in Locale.objects.all()
     ])
+
+
+@register.simple_tag(takes_context=True)
+def shell_props(context):
+    request = context['request']
+    search_areas = admin_search_areas.search_items_for_request(request)
+    if search_areas:
+        search_area = search_areas[0]
+    else:
+        search_area = None
+
+    explorer_start_page = get_explorable_root_page(request.user)
+
+    return json.dumps({
+        'homeUrl': reverse('wagtailadmin_home'),
+        'logoImages': {
+            'mobileLogo': versioned_static('wagtailadmin/images/wagtail-logo.svg'),
+            'desktopLogoBody': versioned_static('wagtailadmin/images/logo-body.svg'),
+            'desktopLogoTail': versioned_static('wagtailadmin/images/logo-tail.svg'),
+            'desktopLogoEyeOpen': versioned_static('wagtailadmin/images/logo-eyeopen.svg'),
+            'desktopLogoEyeClosed': versioned_static('wagtailadmin/images/logo-eyeclosed.svg'),
+        },
+        'searchUrl': search_area.url if search_area else None,
+        'explorerStartPageId': explorer_start_page.id if explorer_start_page else None,
+        'menuItems': serialize_admin_menu(request, admin_menu),
+        'user': {
+            'name': request.user.first_name or request.user.get_username(),
+            'avatarUrl': avatar_url(request.user, size=50),
+        },
+        'accountUrl': reverse('wagtailadmin_account'),
+        'logoutUrl': reverse('wagtailadmin_logout'),
+    }, cls=DjangoJSONEncoder)
