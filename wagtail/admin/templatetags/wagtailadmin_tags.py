@@ -30,6 +30,7 @@ from wagtail.core import hooks
 from wagtail.core.models import (
     Collection, CollectionViewRestriction, Locale, Page, PageViewRestriction,
     UserPagePermissionsProxy)
+from wagtail.core.telepath import JSContext
 from wagtail.core.utils import camelcase_to_underscore
 from wagtail.core.utils import cautious_slugify as _cautious_slugify
 from wagtail.core.utils import escape_script
@@ -664,6 +665,7 @@ def shell_props(context):
         'searchUrl': search_area.url if search_area else None,
         'explorerStartPageId': explorer_start_page.id if explorer_start_page else None,
         'menuItems': serialize_admin_menu(request, admin_menu),
+        'menuItemsTelepath': JSContext().pack(admin_menu.render_component(request)),
         'user': {
             'name': request.user.first_name or request.user.get_username(),
             'avatarUrl': avatar_url(request.user, size=50),
