@@ -1,8 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import * as mixins from './common/mixins';
-import {getIcon} from './common/iconfont';
+import * as mixins from '../common/mixins';
+import {getIcon} from '../common/iconfont';
+import { ModuleDefinition } from '../defs';
 
 interface SearchFormProps {
     collapsed: boolean;
@@ -143,4 +144,17 @@ export const SearchInput: React.FunctionComponent<SearchInputProps> = ({collapse
             </div>
         </SearchForm>
     );
+}
+
+
+export class SearchModuleDefinition implements ModuleDefinition {
+    searchUrl: string;
+
+    constructor(searchUrl: string) {
+        this.searchUrl = searchUrl;
+    }
+
+    render({collapsed, navigate}) {
+        return <SearchInput collapsed={collapsed} searchUrl={this.searchUrl} navigate={navigate} />;
+    }
 }

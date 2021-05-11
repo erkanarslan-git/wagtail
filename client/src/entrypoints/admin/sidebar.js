@@ -6,12 +6,12 @@ import {
     PageExplorerMenuItemDefinition,
     SettingsMenuItemDefinition,
     CustomBrandingModuleDefinition,
-    SearchModuleDefinition,
     MainMenuModuleDefinition,
     AccountModuleDefinition,
 } from '../../components/Sidebar/defs';
 
 import { WagtailBrandingModuleDefinition } from '../../components/Sidebar/modules/WagtailBranding';
+import { SearchModuleDefinition } from '../../components/Sidebar/modules/Search';
 
 window.telepath.register('wagtail.sidebar.Menu', MenuDefinition);
 window.telepath.register('wagtail.sidebar.LinkMenuItem', LinkMenuItemDefinition);

@@ -67,15 +67,6 @@ export class CustomBrandingModuleDefinition implements ModuleDefinition {
     }
 }
 
-export class SearchModuleDefinition implements ModuleDefinition {
-    constructor() {
-    }
-
-    render() {
-        return <></>;
-    }
-}
-
 export class MainMenuModuleDefinition implements ModuleDefinition {
     menu: MenuDefinition;
 

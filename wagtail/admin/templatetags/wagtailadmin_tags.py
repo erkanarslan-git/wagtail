@@ -662,11 +662,8 @@ def shell_props(context):
     ]
     modules = [module for module in modules if module is not None]
 
-    print(json.dumps(JSContext().pack(modules)))
-
     return json.dumps({
         'modules': JSContext().pack(modules),
-        'searchUrl': search_area.url if search_area else None,
         'explorerStartPageId': explorer_start_page.id if explorer_start_page else None,
         'menuItems': serialize_admin_menu(request, admin_menu),
         'user': {

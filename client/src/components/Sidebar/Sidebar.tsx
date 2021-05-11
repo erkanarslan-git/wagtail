@@ -129,8 +129,6 @@ export const Sidebar: React.FunctionComponent<SidebarProps> =  ({explorerStartPa
 
                 {renderedModules}
 
-                <SearchInput collapsed={collapsed} searchUrl={searchUrl} navigate={navigate} />
-
                 <ExplorerContext.Provider value={{startPageId: explorerStartPageId, wrapperRef: explorerWrapperRef}}>
                     <Menu collapsed={collapsed} activeUrl={window.location.pathname} user={user} accountUrl={accountUrl} logoutUrl={logoutUrl} menuItems={menuItems} navigate={navigate} />
                 </ExplorerContext.Provider>
