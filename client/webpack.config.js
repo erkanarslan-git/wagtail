@@ -46,7 +46,6 @@ module.exports = function exports() {
       'task-chooser-modal',
       'task-chooser',
       'telepath/blocks',
-      'telepath/sidebar',
       'telepath/telepath',
       'telepath/widgets',
       'userbar',
