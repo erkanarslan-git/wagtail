@@ -5,12 +5,13 @@ import {
     SubMenuItemDefinition,
     PageExplorerMenuItemDefinition,
     SettingsMenuItemDefinition,
-    WagtailBrandingModuleDefinition,
     CustomBrandingModuleDefinition,
     SearchModuleDefinition,
     MainMenuModuleDefinition,
     AccountModuleDefinition,
 } from '../../components/Sidebar/defs';
+
+import { WagtailBrandingModuleDefinition } from '../../components/Sidebar/modules/WagtailBranding';
 
 window.telepath.register('wagtail.sidebar.Menu', MenuDefinition);
 window.telepath.register('wagtail.sidebar.LinkMenuItem', LinkMenuItemDefinition);

@@ -665,15 +665,7 @@ def shell_props(context):
     print(json.dumps(JSContext().pack(modules)))
 
     return json.dumps({
-        'telepath': JSContext().pack(modules),
-        'homeUrl': reverse('wagtailadmin_home'),
-        'logoImages': {
-            'mobileLogo': versioned_static('wagtailadmin/images/wagtail-logo.svg'),
-            'desktopLogoBody': versioned_static('wagtailadmin/images/logo-body.svg'),
-            'desktopLogoTail': versioned_static('wagtailadmin/images/logo-tail.svg'),
-            'desktopLogoEyeOpen': versioned_static('wagtailadmin/images/logo-eyeopen.svg'),
-            'desktopLogoEyeClosed': versioned_static('wagtailadmin/images/logo-eyeclosed.svg'),
-        },
+        'modules': JSContext().pack(modules),
         'searchUrl': search_area.url if search_area else None,
         'explorerStartPageId': explorer_start_page.id if explorer_start_page else None,
         'menuItems': serialize_admin_menu(request, admin_menu),

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { ModuleDefinition } from '../defs';
 
 interface LogoWrapperProps {
     collapsed: boolean;
@@ -190,4 +191,18 @@ export const Logo: React.FunctionComponent<LogoProps> = ({collapsed, images, hom
             {/* TODO Do we need this? <span className="u-hidden@sm">{'Dashboard'}</span> */}{/* GETTEXT */}
         </LogoWrapper>
     );
+}
+
+export class WagtailBrandingModuleDefinition implements ModuleDefinition {
+    homeUrl: string;
+    images: LogoImages;
+
+    constructor(homeUrl: string, images: LogoImages) {
+        this.homeUrl = homeUrl;
+        this.images = images;
+    }
+
+    render({collapsed, navigate}) {
+        return <Logo homeUrl={this.homeUrl} images={this.images} collapsed={collapsed} navigate={navigate} />;
+    }
 }

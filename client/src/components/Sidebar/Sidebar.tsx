@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components';
 
 import {SearchInput} from './SearchInput';
 import {Menu} from './Menu';
-import { Logo, LogoImages } from './Logo';
+import { LogoImages } from './modules/WagtailBranding';
 import Icon from './common/Icon';
 import * as mixins from './common/mixins';
+import {ModuleDefinition} from './defs';
 
 // A React context to pass some data down to the ExplorerMenuItem component
 interface ExplorerContext {
@@ -88,6 +89,7 @@ export interface SidebarProps {
     };
     accountUrl: string;
     logoutUrl: string;
+    modules: ModuleDefinition[];
 }
 
 const usePersistedState = <T, _>(key: string, defaultValue: T): [T, (value: T) => void]  => {
@@ -101,7 +103,7 @@ const usePersistedState = <T, _>(key: string, defaultValue: T): [T, (value: T) =
     return [state, setState];
 }
 
-export const Sidebar: React.FunctionComponent<SidebarProps> =  ({homeUrl, logoImages, explorerStartPageId, searchUrl, menuItems, user, accountUrl, logoutUrl}) => {
+export const Sidebar: React.FunctionComponent<SidebarProps> =  ({explorerStartPageId, searchUrl, menuItems, user, accountUrl, logoutUrl, modules}) => {
     const explorerWrapperRef = React.useRef<HTMLDivElement | null>(null);
     const [collapsed, setCollapsed] = usePersistedState('wagtail-sidebar-collapsed', window.innerWidth < 800);
 
@@ -116,6 +118,8 @@ export const Sidebar: React.FunctionComponent<SidebarProps> =  ({homeUrl, logoIm
         return Promise.resolve();
     };
 
+    const renderedModules = modules.map(module => module.render({collapsed, navigate}));
+
     return (
         <SidebarWrapper collapsed={collapsed}>
             <InnerWrapper>
@@ -123,7 +127,7 @@ export const Sidebar: React.FunctionComponent<SidebarProps> =  ({homeUrl, logoIm
                     {collapsed ? <Icon name="angle-double-right" /> : <Icon name="angle-double-left" />}
                 </CollapseToggleWrapper>
 
-                <Logo collapsed={collapsed} images={logoImages} homeUrl={homeUrl} navigate={navigate} />
+                {renderedModules}
 
                 <SearchInput collapsed={collapsed} searchUrl={searchUrl} navigate={navigate} />
 

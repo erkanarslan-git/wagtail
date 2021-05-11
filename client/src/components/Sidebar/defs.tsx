@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Menu types
 
 export interface MenuItemDefinition {
@@ -52,30 +54,45 @@ export class SettingsMenuItemDefinition extends SubMenuItemDefinition {
 
 // Modules
 
-export class WagtailBrandingModuleDefinition {
+export interface ModuleDefinition {
+    render(context: {collapsed: boolean, navigate(url: string): Promise<void>}): React.ReactFragment;
+}
+
+export class CustomBrandingModuleDefinition implements ModuleDefinition {
     constructor() {
+    }
+
+    render() {
+        return <></>;
     }
 }
 
-export class CustomBrandingModuleDefinition {
+export class SearchModuleDefinition implements ModuleDefinition {
     constructor() {
+    }
+
+    render() {
+        return <></>;
     }
 }
 
-export class SearchModuleDefinition {
-    constructor() {
-    }
-}
-
-export class MainMenuModuleDefinition {
+export class MainMenuModuleDefinition implements ModuleDefinition {
     menu: MenuDefinition;
 
     constructor(menu: MenuDefinition) {
         this.menu = menu;
     }
+
+    render() {
+        return <></>;
+    }
 }
 
-export class AccountModuleDefinition {
+export class AccountModuleDefinition implements ModuleDefinition {
     constructor() {
+    }
+
+    render() {
+        return <></>;
     }
 }

@@ -8,9 +8,10 @@ export function initSidebar() {
 
     if (element instanceof HTMLElement && element.dataset.props) {
         const props = JSON.parse(element.dataset.props);
+        const modules = (window as any).telepath.unpack(props['modules']);
 
         ReactDOM.render(
-            <Sidebar {...props}  />,
+            <Sidebar {...props} modules={modules} />,
             element,
             () => {
                 document.body.classList.add('ready');
