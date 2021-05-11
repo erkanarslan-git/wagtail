@@ -20,8 +20,8 @@ from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler, ListElementHandler, ListItemElementHandler, PageLinkElementHandler)
 from wagtail.admin.search import SearchArea
 from wagtail.admin.site_summary import PagesSummaryItem
-from wagtail.admin.ui.main_menu import PageExplorerMenuItem as PageExplorerMenuItemComponent
-from wagtail.admin.ui.main_menu import SettingsMenuItem as SettingsMenuItemComponent
+from wagtail.admin.ui.sidebar import PageExplorerMenuItem as PageExplorerMenuItemComponent
+from wagtail.admin.ui.sidebar import SettingsMenuItem as SettingsMenuItemComponent
 from wagtail.admin.viewsets import viewsets
 from wagtail.admin.widgets import Button, ButtonWithDropdownFromHook, PageListingButton
 from wagtail.core import hooks

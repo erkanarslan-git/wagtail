@@ -4,9 +4,9 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
-from wagtail.admin.ui.main_menu import LinkMenuItem as LinkMenuItemComponent
-from wagtail.admin.ui.main_menu import Menu as MenuComponent
-from wagtail.admin.ui.main_menu import SubMenuItem as SubMenuItemComponent
+from wagtail.admin.ui.sidebar import LinkMenuItem as LinkMenuItemComponent
+from wagtail.admin.ui.sidebar import Menu as MenuComponent
+from wagtail.admin.ui.sidebar import SubMenuItem as SubMenuItemComponent
 from wagtail.core import hooks
 
 

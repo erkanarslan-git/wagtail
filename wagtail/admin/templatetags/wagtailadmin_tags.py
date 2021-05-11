@@ -26,6 +26,7 @@ from wagtail.admin.menu import admin_menu, serialize_admin_menu
 from wagtail.admin.navigation import get_explorable_root_page
 from wagtail.admin.search import admin_search_areas
 from wagtail.admin.staticfiles import versioned_static as versioned_static_func
+from wagtail.admin.ui import sidebar
 from wagtail.core import hooks
 from wagtail.core.models import (
     Collection, CollectionViewRestriction, Locale, Page, PageViewRestriction,
@@ -653,7 +654,18 @@ def shell_props(context):
 
     explorer_start_page = get_explorable_root_page(request.user)
 
+    modules = [
+        sidebar.WagtailBrandingModule(),
+        sidebar.SearchModule(search_area) if search_area else None,
+        sidebar.MainMenuModule(admin_menu.render_component(request)),
+        sidebar.AccountModule(request.user),
+    ]
+    modules = [module for module in modules if module is not None]
+
+    print(json.dumps(JSContext().pack(modules)))
+
     return json.dumps({
+        'telepath': JSContext().pack(modules),
         'homeUrl': reverse('wagtailadmin_home'),
         'logoImages': {
             'mobileLogo': versioned_static('wagtailadmin/images/wagtail-logo.svg'),
@@ -665,7 +677,6 @@ def shell_props(context):
         'searchUrl': search_area.url if search_area else None,
         'explorerStartPageId': explorer_start_page.id if explorer_start_page else None,
         'menuItems': serialize_admin_menu(request, admin_menu),
-        'menuItemsTelepath': JSContext().pack(admin_menu.render_component(request)),
         'user': {
             'name': request.user.first_name or request.user.get_username(),
             'avatarUrl': avatar_url(request.user, size=50),
